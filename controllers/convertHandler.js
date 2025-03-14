@@ -105,7 +105,7 @@ class ConvertHandler {
     const returnUnit = this.getReturnUnit();
     return {
       initNum:input,
-      initUnit:unit,
+      initUnit:unit === "l"?"L":unit,
       returnNum,
       returnUnit,
       string:this.getString()
