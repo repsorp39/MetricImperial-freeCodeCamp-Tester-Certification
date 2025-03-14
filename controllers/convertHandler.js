@@ -1,44 +1,116 @@
-function ConvertHandler() {
+class ConvertHandler {
   
-  this.getNum = function(input) {
-    let result;
+  constructor(input){
+    this.input = input.toLowerCase();
+    this.response = {};
+  }
+
+  getNum() { 
+    const unit = this.getUnit();
     
-    return result;
+    let num = !unit ? this.input : this.input.split(unit)[0];
+
+    if(num === "") return 1;
+
+    if(/^[0-9]+(\.[0-9]+)?(\/[0-9]+(\.[0-9]+)?)?$/.test(num)){
+      if(num.includes("/")){
+        let tabNums = num.split("/");
+        return Number(tabNums[0])/ Number(tabNums[1]);
+      }
+      return Number(num);
+    }
+   
+    return null;
+
   };
   
-  this.getUnit = function(input) {
-    let result;
-    
-    return result;
+  getUnit() {
+    let res = this.input.match(/[A-Za-z]/);
+    return !res ? "": this.input.slice(res["index"]);
   };
   
-  this.getReturnUnit = function(initUnit) {
-    let result;
-    
-    return result;
+  getReturnUnit() {
+    const initUnit = this.getUnit();
+     const matchers = {
+      "gal":"L",
+      "l":"gal",
+      "mi":"km",
+      "km":"mi",
+      "lbs":"kg",
+      "kg":"lbs"
+     }
+
+     return matchers[initUnit];
   };
 
-  this.spellOutUnit = function(unit) {
-    let result;
+  spellOutUnit(unit) {
+    const matchers = {
+      "gal":"gallons",
+      "L":"liters",
+      "l":"liters",
+      "mi":"miles",
+      "km":"kilometers",
+      "lbs":"pounds",
+      "kg":"kilograms"
+     }
     
-    return result;
+     return matchers[unit];
   };
   
-  this.convert = function(initNum, initUnit) {
+  convert() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
+
+    const initNum = this.getNum();
+    const initUnit = this.getUnit();
     let result;
+    switch(initUnit){
+      case "gal": result = galToL * initNum;
+      break;
+      case "l": result =  initNum / galToL ;
+      break;
+      case "lbs": result = lbsToKg * initNum;
+      break;
+      case "kg": result = initNum / lbsToKg ;
+      break;
+      case "mi": result = miToKm * initNum;
+      break;
+      case "km": result = initNum / miToKm ;
+      break;
+    }
     
-    return result;
+    return result.toFixed(5);
   };
   
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    
-    return result;
+  getString() {
+    const initNum = this.getNum();
+    const initUnit = this.getUnit();
+    const returnNum = this.convert(initNum,initUnit);
+    const returnUnit = this.getReturnUnit(initUnit);
+    return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
   };
   
+  getResult(){
+
+    const availableUnits = ["gal","l","mi","km","lbs","kg"];
+
+    let input = this.getNum();
+    const unit = this.getUnit();
+
+    if(!input && (!unit || !availableUnits.includes(unit))) return "invalid number and unit";
+    if(!input) return "invalid number";
+    if(!unit || !availableUnits.includes(unit)) return "invalid unit";
+    const returnNum = this.convert();
+    const returnUnit = this.getReturnUnit();
+    return {
+      initNum:input,
+      initUnit:unit,
+      returnNum,
+      returnUnit,
+      string:this.getString()
+    }
+  }
 }
 
 module.exports = ConvertHandler;
