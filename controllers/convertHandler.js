@@ -82,7 +82,7 @@ class ConvertHandler {
       break;
     }
     
-    return Number(result.toFixed(5));
+    return result.toFixed(5);
   };
   
   getString() {
