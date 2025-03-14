@@ -5,7 +5,7 @@ const ConvertHandler = require('../controllers/convertHandler.js');
 
 
 suite('Unit Tests', function(){
-    it("convertHandler should correctly read a whole number input",()=>{
+    test("should correctly read a whole number input",()=>{
         let convertHandler = new ConvertHandler("15mi");
         assert.equal(convertHandler.getNum(),15);
     })
