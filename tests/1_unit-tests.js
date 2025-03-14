@@ -28,7 +28,7 @@ suite('Unit Tests', function(){
 
     test("should correctly return an error on a double-fraction",()=>{
         let convertHandler = new ConvertHandler("15/12/12");
-       expect(convertHandler.getNum()).not.to.be.a("number");
+       assert.notEqual(typeof convertHandler.getNum() ,'number');
     })
 
     test("should correctly default to a numerical input of 1 when no numerical input is provided",()=>{
