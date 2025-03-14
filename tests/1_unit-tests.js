@@ -31,7 +31,7 @@ suite('Unit Tests', function(){
        expect(convertHandler.getNum()).not.to.be.a("number");
     })
 
-    it("should correctly default to a numerical input of 1 when no numerical ",()=>{
+    it("should correctly default to a numerical input of 1 when no numerical input is provided",()=>{
         let cvt = new ConvertHandler("mi");
        assert.equal(cvt.getNum(),1);
     })
@@ -60,7 +60,7 @@ suite('Unit Tests', function(){
         assert.equal(cvt3.getReturnUnit(),"L");
     })
 
-    it("should correctly return the spelled-out string unit for each valid input",()=>{
+    it("should correctly return the spelled-out string unit for each valid input unit",()=>{
         const cvt1 = new ConvertHandler("10mi");
         const exp1 = "10 miles converts to 16.09340 kilometers";
         assert.equal(cvt1.getString(),exp1);
