@@ -1,6 +1,8 @@
 class ConvertHandler {
   
   constructor(input){
+   
+    input = input.replaceAll(/\"|\'/g,''); 
     this.input = input.toLowerCase();
     this.response = {};
   }
