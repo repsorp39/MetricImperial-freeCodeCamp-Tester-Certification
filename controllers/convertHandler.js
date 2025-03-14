@@ -103,7 +103,7 @@ class ConvertHandler {
     if(!input && (!unit || !availableUnits.includes(unit))) return "invalid number and unit";
     if(!input) return "invalid number";
     if(!unit || !availableUnits.includes(unit)) return "invalid unit";
-    const returnNum = this.convert();
+    const returnNum = Number(this.convert());
     const returnUnit = this.getReturnUnit();
     return {
       initNum:input,
